@@ -95,25 +95,7 @@ function markerSize(mag) {
 // function bubbleColor()
 
 
-function bubbleColor(mag) {
-  switch(mag) {
-      case (mag < 1):
-        "#66b3ff";
-        break;
-      case (mag < 2):
-        "#85e0e0";
-        break;
-      case (mag < 4):
-        "#ffff66";
-        break;
-      case (mag < 5):
-        "#ff9999";
-        break;
-      case (mag < 6):
-        "#ff1a1a";
-        break;
-  }
-}
+
 
 
 function bubbleColor(theMagnitude) {
@@ -131,6 +113,9 @@ function bubbleColor(theMagnitude) {
   }
   else if (theMagnitude < 5) {
     return "#ff1a1a";
+  }
+  else if (theMagnitude < 10) {
+    return "#7300e6";
   }
   else {
     return "#cc80ff";
