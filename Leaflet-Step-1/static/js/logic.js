@@ -12,23 +12,29 @@ function createFeatures(earthquakeData) {
 
   // Define a function we want to run once for each feature in the features array
   // Give each feature a popup describing the place and time of the earthquake
-  function onEachFeature(feature, layer) {
-    layer.bindPopup("<h3>" + feature.properties.place +
-      "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+  function onEachFeature(features, layer) {
+    layer.bindPopup("<h3>" + features.properties.place +
+      "</h3><hr><p>" + new Date(features.properties.time) + "</p><hr><p> The magnitude is " + features.properties.mag + "</p>" );
   }
 
-  var geojsonMarkerOptions = {
-    radius: 8,
-    fillColor: "#ff7800",
-    color: "#000",
-    opacity: 1,
-    fillOpacity: 0.8
-};
+//   var geojsonMarkerOptions = {
+//     radius: 8,
+//     fillColor: "#ff7800",
+//     color: "#000",
+//     opacity: 1,
+//     fillOpacity: 0.8
+// };
 
 var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
-    pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, geojsonMarkerOptions);
+    pointToLayer: function (features, latlng) {
+        return L.circleMarker(latlng, {
+          radius: markerSize(features.properties.mag),
+          fillColor: bubbleColor(features.properties.mag),
+          color: "#000",
+          opacity: 1,
+          fillOpacity: 0.8
+        });
     }
 })
 
@@ -78,4 +84,55 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+}
+
+
+function markerSize(mag) {
+  return mag * 7;
+}
+
+
+// function bubbleColor()
+
+
+function bubbleColor(mag) {
+  switch(mag) {
+      case (mag < 1):
+        "#66b3ff";
+        break;
+      case (mag < 2):
+        "#85e0e0";
+        break;
+      case (mag < 4):
+        "#ffff66";
+        break;
+      case (mag < 5):
+        "#ff9999";
+        break;
+      case (mag < 6):
+        "#ff1a1a";
+        break;
+  }
+}
+
+
+function bubbleColor(theMagnitude) {
+  if (theMagnitude < 1) {
+    return "#66b3ff";
+  }
+  else if (theMagnitude < 2) {
+    return "#85e0e0";
+  }
+  else if (theMagnitude < 3) {
+    return "#ffff66";
+  }
+  else if (theMagnitude < 4) {
+    return "#ff9999";
+  }
+  else if (theMagnitude < 5) {
+    return "#ff1a1a";
+  }
+  else {
+    return "#cc80ff";
+  }
 }
