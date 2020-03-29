@@ -92,12 +92,6 @@ function markerSize(mag) {
 }
 
 
-// function bubbleColor()
-
-
-
-
-
 function bubbleColor(theMagnitude) {
   if (theMagnitude < 1) {
     return "#66b3ff";
